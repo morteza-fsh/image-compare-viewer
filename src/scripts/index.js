@@ -21,6 +21,7 @@ class ImageCompare {
       verticalMode: false,
       startingPoint: 50,
       fluidMode: false,
+      removeScroll: true,
     };
 
     this.settings = Object.assign(defaults, settings);
@@ -63,7 +64,9 @@ class ImageCompare {
     this.el.addEventListener("mousedown", (ev) => {
       this._activate(true);
       document.body.classList.add("icv__body");
-      disableBodyScroll(this.el, {reserveScrollBarGap: true});
+      if (this.settings.removeScroll) {
+        disableBodyScroll(this.el, {reserveScrollBarGap: true});
+      }
       this._slideCompare(ev);
     });
     this.el.addEventListener(
@@ -74,7 +77,9 @@ class ImageCompare {
     this.el.addEventListener("mouseup", () => this._activate(false));
     document.body.addEventListener("mouseup", () => {
       document.body.classList.remove("icv__body");
-      enableBodyScroll(this.el);
+      if (this.settings.removeScroll) {
+        enableBodyScroll(this.el);
+      }
       this._activate(false);
     });
 
@@ -83,7 +88,10 @@ class ImageCompare {
     this.control.addEventListener("touchstart", (e) => {
       this._activate(true);
       document.body.classList.add("icv__body");
-      disableBodyScroll(this.el, {reserveScrollBarGap: true});
+      if (this.settings.removeScroll) {
+        disableBodyScroll(this.el, {reserveScrollBarGap: true});
+
+      }
     });
 
     this.el.addEventListener("touchmove", (ev) => {
@@ -92,7 +100,9 @@ class ImageCompare {
     this.el.addEventListener("touchend", () => {
       this._activate(false);
       document.body.classList.remove("icv__body");
-      enableBodyScroll(this.el);
+      if (this.settings.removeScroll) {
+        enableBodyScroll(this.el);
+      }
     });
 
     // hover
